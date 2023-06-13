@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useRef } from "react";
 import axios from "axios";
 import {
   Box,
@@ -29,16 +29,13 @@ const FileUpload = () => {
   const [uploadedImageUrl, setUploadedImageUrl] = useState("");
   const [boundaryData, setBoundaryData] = useState({});
 
-  let canvas = document.querySelector("canvas");
+  const canvasRef = useRef(null)
+  let canvas = canvasRef.current;
+  // let canvas = document.querySelector("canvas");
   if (!canvas) {
     canvas = document.createElement("canvas");
     document.body.appendChild(canvas);
   }
-
-  canvas.style.position = "absolute";
-  canvas.style.top = "50%";
-  canvas.style.left = "50%";
-  canvas.style.transform = "translate(-50%, -50%)";
 
   const ctx = canvas.getContext("2d");
 
@@ -89,7 +86,7 @@ const FileUpload = () => {
   const img = new Image();
   img.src = uploadedImageUrl;
 
-  function drawBoundingBoxes(boxes, label, confidence) {
+  const drawBoundingBoxes = (boxes, label, confidence) => {
     ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
     console.log('boxes.length: ', boxes.length);
     for (let i = 0; i < boxes.length; i++) {
@@ -152,11 +149,12 @@ const FileUpload = () => {
     drawBoundingBoxes(boxes, label, confidence);
 
   }
+  console.log("boundaryData",boundaryData);
 
   return (
     <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-      <Grid container spacing={8}>
-        <Grid item xs={12} md={4} lg={3}>
+      <Grid container>
+        {/* <Grid item xs={12} md={4} lg={3}>
           <Paper
             sx={{
               p: 2,
@@ -168,8 +166,9 @@ const FileUpload = () => {
           >
             <img src={logodfki} alt={"dfki"} loading="lazy" />
           </Paper>
-        </Grid>
-        <Grid item xs={12} md={8} lg={9}>
+        </Grid> */}
+        {/* md={8} lg={9} */}
+        <Grid item xs={12}>
           <Paper
             sx={{
               p: 2,
@@ -239,6 +238,23 @@ const FileUpload = () => {
             </Grid>
           </Paper>
         </Grid>
+      </Grid>
+      <Grid item xs={12}>
+        {/* {boundaryData && boundaryData.length > 0 && ( */}
+        <Paper
+          sx={{
+            p: 2,
+            marginTop: 3,
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+          elevation={4}
+        >
+          <canvas ref={canvasRef}></canvas>
+        </Paper>
+        {/* )} */}
       </Grid>
     </Container>
   );
