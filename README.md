@@ -3,7 +3,7 @@ This is a simple GUI based on React, which can act as a Front-End for an Object 
 
 With a given `Endpoint`, the GUI can send `POST` requests to an Object Detection Service and then visualize the results.
 
-This Front-End is compactable with this [Object-Detection-Counter-API](https://github.com/jbantony/Object-Detection-Counter-API) and both can be deployed as container images. 
+This Front-End is compactable with this [Object-Detection-Counter-API](https://github.com/jbantony/Object-Detection-Counter-API-YOLOv5) and both can be deployed as container images. 
 
 ## Getting started
 
